@@ -1,0 +1,28 @@
+[versions]
+cichlid_gradle = "0.1-SNAPSHOT"
+mod_dev_gradle = "2.0.107"
+loom = "1.11.+"
+
+minecraft = "1.21.8"
+mojmap = "2025.07.20"
+
+neo_form = "1.21.8-20250717.133445"
+
+fabric_loader = "0.16.14"
+fabric_api = "0.130.0+1.21.8"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+
+fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
+fabric_api= { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
+
+[bundles]
+common = []
+fabric = [ "fabric_loader", "fabric_api" ]
+include_fabric = []
+
+[plugins]
+cichlid_gradle = { id = "fish.cichlidmc.cichlid-gradle", version.ref = "cichlid_gradle" }
+mod_dev_gradle = { id = "net.neoforged.moddev", version.ref = "mod_dev_gradle" }
+loom = { id = "fabric-loom", version.ref = "loom" }
