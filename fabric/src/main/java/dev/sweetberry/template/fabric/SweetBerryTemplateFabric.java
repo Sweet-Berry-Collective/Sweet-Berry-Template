@@ -1,4 +1,4 @@
-package dev.sweettberry.template.fabric;
+package dev.sweetberry.template.fabric;
 
 import dev.sweetberry.template.SweetBerryTemplate;
 import net.fabricmc.api.ModInitializer;

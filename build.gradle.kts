@@ -6,6 +6,10 @@ class Properties(project: Project) {
     val modDescription: String by project
     val group: String by project
     val modId: String by project
+    val license: String by project
+    val repo: String by project
+    val minMinecraft: String by project
+    val maxMinecraft: String by project
 }
 
 inline fun <reified T : Task> TaskContainer.configureFor(task: String, action: Action<T>) {
@@ -40,14 +44,18 @@ subprojects {
 
     tasks.named<ProcessResources>("processResources") {
         val replace: Map<String, Any> = mapOf(
-            "modid" to properties.modId,
+            "mod_id" to properties.modId,
             "group" to properties.group,
-            "mod_desc" to properties.modDescription,
+            "mod_description" to properties.modDescription,
             "mod_name" to properties.modName,
             "version" to version,
             "fabric_loader_version" to libs.versions.fabric.loader.get(),
             "fabric_api_version" to libs.versions.fabric.api.get(),
-            "minecraft_version" to libs.versions.minecraft.get()
+            "minecraft_version" to libs.versions.minecraft.get(),
+            "license" to properties.license,
+            "repo" to properties.repo,
+            "min_minecraft" to properties.minMinecraft,
+            "max_minecraft" to properties.maxMinecraft
         )
 
         inputs.properties(replace)

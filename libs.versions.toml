@@ -6,6 +6,9 @@ loom = "1.11.+"
 minecraft = "1.21.8"
 mojmap = "2025.07.20"
 
+mixin = "0.15.2+mixin.0.8.7"
+mixin_extras = "0.4.1"
+
 neo_forge = "21.8.40"
 
 fabric_loader = "0.16.14"
@@ -14,11 +17,14 @@ fabric_api = "0.130.0+1.21.8"
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 
+mixin = { module = "net.fabricmc:sponge-mixin", version.ref = "mixin" }
+mixin_extras = { module = "io.github.llamalad7:mixinextras-common", version.ref = "mixin_extras" }
+
 fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
 fabric_api= { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 
 [bundles]
-common = []
+common = ["mixin", "mixin_extras"]
 fabric = [ "fabric_loader", "fabric_api" ]
 include_fabric = []
 neoforge = []

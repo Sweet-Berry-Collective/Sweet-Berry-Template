@@ -1,4 +1,5 @@
 import fish.cichlidmc.cichlid_gradle.util.Distribution
+import java.net.URI
 
 plugins {
     java
@@ -7,6 +8,10 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        name = "Forge"
+        url = URI("https://maven.minecraftforge.net/")
+    }
     minecraft.libraries()
     minecraft.versions()
     maven("https://mvn.devos.one/releases/")

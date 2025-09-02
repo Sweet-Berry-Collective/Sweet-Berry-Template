@@ -43,9 +43,15 @@ neoForge {
     }
 }
 
+val commonJava = configurations.dependencyScope("commonJava")
+val commonResources = configurations.dependencyScope("commonResources")
+
 dependencies {
     implementation(libs.bundles.neoforge)
     clientImplementation(main.output)
+
+    commonJava(project(":common", configuration="clientCommonJava"))
+    commonResources(project(":common", configuration="clientCommonResources"))
 }
 
 inline fun <reified T : Task> TaskContainer.configureFor(task: String, action: Action<T>) {
@@ -54,4 +60,8 @@ inline fun <reified T : Task> TaskContainer.configureFor(task: String, action: A
 
 tasks.configureFor<JavaCompile>("compileJava") {
     source(client.allSource)
+}
+
+tasks.configureFor<ProcessResources>("processResources") {
+    from(client.resources)
 }

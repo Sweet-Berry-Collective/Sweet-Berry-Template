@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "Sweet Berry Collective"
+  ],
+  "contributors": [],
+  "contact": {
+    "homepage": "https://sweetberry.dev/",
+    "issues": "${repo}/issues",
+    "sources": "${repo}"
+  },
+  "license": "${license}",
+  "icon": "assets/${mod_id}/icon.png",
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json",
+    {
+      "config": "${mod_id}.client.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "${mod_id}.fabric.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "minecraft": ">=${min_minecraft} <=${max_minecraft}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": ">=${fabric_api_version}"
+  },
+  "entrypoints": {
+    "main": [
+      "dev.sweetberry.template.fabric.SweetBerryTemplateFabric"
+    ],
+    "client": [
+      "dev.sweetberry.template.fabric.client.SweetBerryTemplateFabricClient"
+    ]
+  }
+}
