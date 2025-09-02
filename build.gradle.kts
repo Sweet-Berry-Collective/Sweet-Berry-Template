@@ -1,3 +1,7 @@
+import java.io.ByteArrayOutputStream
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 evaluationDependsOnChildren()
 
 class Properties(project: Project) {
@@ -20,13 +24,15 @@ fun ConfigurationContainer.findOrCreateDependencyScopeByName(name: String): Conf
     return findByName(name) ?: dependencyScope(name).get()
 }
 
+val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM.dd"))
+
 subprojects {
     val properties = Properties(rootProject)
 
     val buildNum = providers.environmentVariable("GITHUB_RUN_NUMBER")
         .filter(String::isNotEmpty)
         .map { "build.$it" }
-        .orElse("local")
+        .orElse("local.$timestamp")
         .get()
 
     extensions.getByType<BasePluginExtension>().archivesName = properties.modId
@@ -34,6 +40,8 @@ subprojects {
     group = properties.group
 
     version = "${properties.version}+$buildNum-mc.${libs.versions.minecraft.get()}-$name"
+
+    val jarName = "${properties.modId}-${version}.jar"
 
     extensions.getByType<JavaPluginExtension>().run {
         toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -124,4 +132,11 @@ subprojects {
         dependsOn(resolvableClientCommonResources)
         from(resolvableClientCommonResources)
     }
+
+    tasks.register<Copy>("collect") {
+        from(project.layout.buildDirectory.file("libs/$jarName"))
+        into(rootProject.layout.buildDirectory.dir("libs/"))
+    }
+
+    tasks.findByName("assemble")?.finalizedBy("collect")
 }
