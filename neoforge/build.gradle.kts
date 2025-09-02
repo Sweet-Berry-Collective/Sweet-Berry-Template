@@ -17,8 +17,22 @@ neoForge {
     }
 }
 
-dependencies {
-    implementation(libs.bundles.common)
+val main by sourceSets.getting
+val client by sourceSets.creating
+
+val clientImplementation by configurations.getting {
+    extendsFrom(configurations.implementation.get())
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+dependencies {
+    implementation(libs.bundles.common)
+    clientImplementation(main.output)
+}
+
+inline fun <reified T : Task> TaskContainer.configureFor(task: String, action: Action<T>) {
+    named<T>(task).configure(action)
+}
+
+tasks.configureFor<JavaCompile>("compileJava") {
+    source(client.allSource)
+}
