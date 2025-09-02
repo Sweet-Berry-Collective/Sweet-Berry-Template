@@ -33,7 +33,19 @@ val clientImplementation by configurations.getting {
 dependencies {
     implementation(mcServer.dependency)
     clientImplementation(mcClient.dependency)
-    clientImplementation(sourceSets.main)
+    clientImplementation(main.output)
 
     implementation(libs.bundles.common)
+}
+
+configurations.consumable("commonJava")
+configurations.consumable("commonResources")
+configurations.consumable("clientCommonJava")
+configurations.consumable("clientCommonResources")
+
+artifacts {
+    add("commonJava", main.java.sourceDirectories.singleFile)
+    add("commonResources", main.resources.sourceDirectories.singleFile)
+    add("clientCommonJava", client.java.sourceDirectories.singleFile)
+    add("clientCommonResources", client.resources.sourceDirectories.singleFile)
 }

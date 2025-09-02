@@ -5,6 +5,6 @@ import net.fabricmc.api.ClientModInitializer;
 public class SweetBerryTemplateFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-//        SweetBerryTemplateClient.initialize();
+        SweetBerryTemplateClient.initialize();
     }
 }
