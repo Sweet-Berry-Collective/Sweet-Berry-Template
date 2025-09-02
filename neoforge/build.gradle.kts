@@ -8,17 +8,34 @@ repositories {
     maven("https://mvn.devos.one/snapshots/")
 }
 
+val main by sourceSets.getting
+val client by sourceSets.creating
+
 neoForge {
-    neoFormVersion = libs.versions.neo.form.get()
+    version = libs.versions.neo.forge.get()
+
+    validateAccessTransformers = true
+    runs {
+        create("client") {
+            client()
+        }
+        create("server") {
+            server()
+        }
+    }
 
     parchment {
         minecraftVersion = libs.versions.minecraft.get()
         mappingsVersion = libs.versions.mojmap.get()
     }
-}
 
-val main by sourceSets.getting
-val client by sourceSets.creating
+    mods {
+        create(rootProject.properties["modid"].toString()) {
+            sourceSet(main)
+            sourceSet(client)
+        }
+    }
+}
 
 val clientImplementation by configurations.getting {
     extendsFrom(configurations.implementation.get())
