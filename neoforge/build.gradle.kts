@@ -11,8 +11,14 @@ repositories {
 val main by sourceSets.getting
 val client by sourceSets.creating
 
+val clientImplementation by configurations.getting {
+    extendsFrom(configurations.implementation.get())
+}
+
 neoForge {
     version = libs.versions.neo.forge.get()
+
+    addModdingDependenciesTo(client)
 
     validateAccessTransformers = true
     runs {
@@ -37,12 +43,8 @@ neoForge {
     }
 }
 
-val clientImplementation by configurations.getting {
-    extendsFrom(configurations.implementation.get())
-}
-
 dependencies {
-    implementation(libs.bundles.common)
+    implementation(libs.bundles.neoforge)
     clientImplementation(main.output)
 }
 

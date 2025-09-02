@@ -2,8 +2,10 @@ evaluationDependsOnChildren()
 
 class Properties(project: Project) {
     val version: String by project
+    val modName: String by project
+    val modDescription: String by project
     val group: String by project
-    val modid: String by project
+    val modId: String by project
 }
 
 inline fun <reified T : Task> TaskContainer.configureFor(task: String, action: Action<T>) {
@@ -23,7 +25,7 @@ subprojects {
         .orElse("local")
         .get()
 
-    extensions.getByType<BasePluginExtension>().archivesName = properties.modid
+    extensions.getByType<BasePluginExtension>().archivesName = properties.modId
 
     group = properties.group
 
@@ -38,6 +40,10 @@ subprojects {
 
     tasks.named<ProcessResources>("processResources") {
         val replace: Map<String, Any> = mapOf(
+            "modid" to properties.modId,
+            "group" to properties.group,
+            "mod_desc" to properties.modDescription,
+            "mod_name" to properties.modName,
             "version" to version,
             "fabric_loader_version" to libs.versions.fabric.loader.get(),
             "fabric_api_version" to libs.versions.fabric.api.get(),
@@ -46,7 +52,7 @@ subprojects {
 
         inputs.properties(replace)
 
-        filesMatching(listOf("fabric.mod.json")) {
+        filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) {
             expand(replace)
         }
     }

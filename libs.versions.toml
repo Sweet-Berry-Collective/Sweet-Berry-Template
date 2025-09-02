@@ -21,6 +21,7 @@ fabric_api= { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabr
 common = []
 fabric = [ "fabric_loader", "fabric_api" ]
 include_fabric = []
+neoforge = []
 
 [plugins]
 cichlid_gradle = { id = "fish.cichlidmc.cichlid-gradle", version.ref = "cichlid_gradle" }
