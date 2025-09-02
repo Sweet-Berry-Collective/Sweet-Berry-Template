@@ -20,3 +20,5 @@ neoForge {
 dependencies {
     implementation(libs.bundles.common)
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)

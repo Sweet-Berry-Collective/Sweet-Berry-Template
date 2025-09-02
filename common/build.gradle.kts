@@ -38,6 +38,15 @@ dependencies {
     implementation(libs.bundles.common)
 }
 
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+    // Feacher!
+    registerFeature("client") {
+        usingSourceSet(client)
+    }
+}
+
 configurations.consumable("commonJava")
 configurations.consumable("commonResources")
 configurations.consumable("clientCommonJava")

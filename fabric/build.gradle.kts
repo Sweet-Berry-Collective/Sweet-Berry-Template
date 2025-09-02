@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.loom)
 }
 
-evaluationDependsOn(":common")
-
 repositories {
     mavenCentral()
     maven("https://maven.fabricmc.net/" )
@@ -59,6 +57,7 @@ dependencies {
 
     compileOnly(project(":common"))
     clientCompileOnly(project(":common"))
+    clientCompileOnly(project(":common", configuration="clientApiElements"))
 
     commonJava(project(":common", configuration="commonJava"))
     commonResources(project(":common", configuration="commonResources"))
@@ -69,6 +68,8 @@ dependencies {
     modImplementation(libs.bundles.fabric)
     include(libs.bundles.include.fabric)
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 val resolvableCommonJava: Configuration by configurations.resolvable("resolvableCommonJava") {
     extendsFrom(commonJava)
@@ -108,9 +109,4 @@ configureForSourceSet<JavaCompile>(client.compileJavaTaskName) {
 configureForSourceSet<ProcessResources>(client.processResourcesTaskName) {
     dependsOn(resolvableClientCommonResources)
     from(resolvableClientCommonResources)
-}
-
-tasks.withType(JavaCompile::class).configureEach {
-    options.encoding = "UTF-8"
-    options.release = 21
 }
